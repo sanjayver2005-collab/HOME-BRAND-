@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjay - Modern Bed & Home Luxury Living</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBg: '#F8F6F0',       /* 60% Dominant: Warm Alabaster/Cream */
+                        brandSurface: '#FFFFFF',
+                        brandPrimary: '#2C2A29',   /* 30% Structural: Deep Charcoal/Warm Espresso */
+                        brandAccent: '#C5A059',    /* 10% Accent: Muted Champagne Gold */
+                        brandMuted: '#797471'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8F6F0; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+        
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-brandBg text-brandPrimary font-sans antialiased selection:bg-brandAccent selection:text-white">
+
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-brandBg/90 backdrop-blur-md border-b border-brandPrimary/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-2 group">
+                <span class="font-serif text-3xl font-bold tracking-wider group-hover:text-brandAccent transition-colors">SANJAY</span>
+                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-brandAccent border-l border-brandAccent/40 pl-2">Est. Luxury</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+                <a href="#home" class="hover:text-brandAccent transition-colors">Home</a>
+                <a href="#collection" class="hover:text-brandAccent transition-colors">Collections</a>
+                <a href="#services" class="hover:text-brandAccent transition-colors">Services</a>
+                <a href="#story" class="hover:text-brandAccent transition-colors">Philosophy</a>
+                <a href="#contact" class="hover:text-brandAccent transition-colors">Atelier</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="openSearchModal()" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandPrimary/5 transition-colors" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <button onclick="openCartDrawer()" class="relative w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandPrimary/5 transition-colors" aria-label="Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-count" class="absolute top-1 right-1 w-4 h-4 bg-brandAccent text-white text-[10px] rounded-full flex items-center justify-center font-bold">1</span>
+                </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center hover:bg-brandPrimary/5 transition-colors">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-brandPrimary/40 backdrop-blur-sm hidden transition-opacity">
+        <div class="absolute right-0 top-0 bottom-0 w-80 bg-brandBg p-8 flex flex-col justify-between shadow-2xl">
+            <div>
+                <div class="flex justify-between items-center mb-10">
+                    <span class="font-serif text-2xl font-bold">SANJAY</span>
+                    <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-full hover:bg-brandPrimary/10 flex items-center justify-center">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col gap-6 text-lg font-medium">
+                    <a href="#home" onclick="toggleMobileMenu()" class="hover:text-brandAccent">Home</a>
+                    <a href="#collection" onclick="toggleMobileMenu()" class="hover:text-brandAccent">Collections</a>
+                    <a href="#services" onclick="toggleMobileMenu()" class="hover:text-brandAccent">Services</a>
+                    <a href="#story" onclick="toggleMobileMenu()" class="hover:text-brandAccent">Philosophy</a>
+                    <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-brandAccent">Atelier</a>
+                </div>
+            </div>
+            <div class="text-xs text-brandMuted border-t border-brandPrimary/10 pt-4">
+                <p>Sanctuary of Absolute Elegance</p>
+                <p class="mt-1">© 2026 SANJAY Home.</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="home" class="min-h-screen pt-32 pb-16 px-6 flex items-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-8 z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brandAccent/10 text-brandAccent text-xs font-semibold tracking-widest uppercase">
+                    <i class="fa-regular fa-star"></i> Sanctuary of Absolute Elegance
+                </div>
+                <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal leading-[1.1] tracking-tight text-brandPrimary">
+                    Sanctuary of <span class="italic text-brandAccent font-light">Absolute</span> Elegance.
+                </h1>
+                <p class="text-lg text-brandMuted max-w-xl font-light leading-relaxed">
+                    "Elevating domestic living through bespoke artisan beds, ergonomic mastery, and soulful minimalist home aesthetics."
+                </p>
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                    <a href="#collection" class="px-8 py-4 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg hover:shadow-xl flex items-center gap-3 group">
+                        Explore Collection <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <button onclick="openProductModal('Sanjay Sovereign Bed', 235000, 'Solid white oak frame with integrated ambient LED headboard channels.', 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop')" class="px-8 py-4 border border-brandPrimary/30 rounded-full font-medium hover:border-brandAccent hover:text-brandAccent transition-all">
+                        View Signature Piece
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-brandPrimary/10 max-w-lg">
+                    <div>
+                        <p class="font-serif text-3xl font-semibold">100%</p>
+                        <p class="text-xs text-brandMuted uppercase tracking-wider mt-1">Organic Materials</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-3xl font-semibold">10 Yrs</p>
+                        <p class="text-xs text-brandMuted uppercase tracking-wider mt-1">Structural Warranty</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-3xl font-semibold">Bespoke</p>
+                        <p class="text-xs text-brandMuted uppercase tracking-wider mt-1">Tailored Comfort</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-5 relative">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5] bg-brandPrimary/5">
+                    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Sanjay Luxury Bed" 
+                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                         onerror="this.src='https://placehold.co/800x1000/e2e2e2/333333?text=Luxury+Bed'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandPrimary/60 via-transparent to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">Featured Masterpiece</span>
+                            <h3 class="font-serif text-2xl font-medium mt-1">The Sovereign Platform Bed</h3>
+                            <p class="text-sm text-gray-300 mt-1">Solid Sheesham wood & Italian linen upholstery</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Floating badge -->
+                <div class="absolute -bottom-6 -left-6 bg-brandSurface p-6 rounded-2xl shadow-xl border border-brandPrimary/10 hidden sm:flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-brandAccent/10 flex items-center justify-center text-brandAccent text-xl">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">Design Award 2025</p>
+                        <p class="text-xs text-brandMuted">International Living Standard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 border-y border-brandPrimary/10 bg-brandSurface/50">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-8 opacity-75">
+            <span class="font-serif text-xl tracking-widest text-brandMuted">VOGUE LIVING</span>
+            <span class="font-serif text-xl tracking-widest text-brandMuted">ARCHITECTURAL DIGEST</span>
+            <span class="font-serif text-xl tracking-widest text-brandMuted">ELLE DECOR</span>
+            <span class="font-serif text-xl tracking-widest text-brandMuted">WALLPAPER*</span>
+            <span class="font-serif text-xl tracking-widest text-brandMuted">GQ HOME</span>
+        </div>
+    </section>
+
+    <section id="collection" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">Curated Catalog</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl mt-2">The Sanctuary Collection</h2>
+                </div>
+                <div class="flex items-center gap-2 bg-brandSurface p-1.5 rounded-full border border-brandPrimary/10">
+                    <button onclick="filterProducts('all')" class="px-6 py-2 rounded-full text-sm font-medium bg-brandPrimary text-brandBg transition-all filter-btn active">All Products</button>
+                    <button onclick="filterProducts('beds')" class="px-6 py-2 rounded-full text-sm font-medium text-brandPrimary hover:text-brandAccent transition-all filter-btn">Beds</button>
+                    <button onclick="filterProducts('living')" class="px-6 py-2 rounded-full text-sm font-medium text-brandPrimary hover:text-brandAccent transition-all filter-btn">Living & Decor</button>
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="beds">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=800&auto=format&fit=crop" alt="Sovereign Bed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Sovereign+Bed'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">Bestseller</span>
+                        <button onclick="openProductModal('Sanjay Sovereign Bed', 235000, 'Solid white oak frame with integrated ambient LED headboard channels.', 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Sanjay Sovereign Bed</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹2,35,000</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Solid white oak frame with integrated ambient LED headboard channels.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">Custom Sizes Available</span>
+                            <button onclick="addToCart('Sanjay Sovereign Bed', 235000)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="beds">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?q=80&w=800&auto=format&fit=crop" alt="Zenith Upholstered Bed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Zenith+Bed'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">New Release</span>
+                        <button onclick="openProductModal('Zenith Upholstered Bed', 265000, 'Plush boucle fabric headboard with handcrafted tufting and hidden hydraulic storage.', 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Zenith Upholstered Bed</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹2,65,000</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Plush boucle fabric headboard with handcrafted tufting and hidden storage.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">3 Color Options</span>
+                            <button onclick="addToCart('Zenith Upholstered Bed', 265000)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="living">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop" alt="Aura Lounge Chair" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Aura+Chair'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">Limited Edition</span>
+                        <button onclick="openProductModal('Aura Lounge Chair', 120000, 'Ergonomic swivel armchair upholstered in full-grain Italian aniline leather with solid brass base.', 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Aura Lounge Chair</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹1,20,000</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Ergonomic swivel armchair upholstered in full-grain Italian aniline leather.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">Handcrafted Brass Base</span>
+                            <button onclick="addToCart('Aura Lounge Chair', 120000)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="living">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1533779283484-8ab4940aa78f?q=80&w=800&auto=format&fit=crop" alt="Solace Bedside Table" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Solace+Table'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">Essential</span>
+                        <button onclick="openProductModal('Solace Bedside Table', 54000, 'Floating walnut nightstand with integrated wireless fast-charging pad and smooth pull-out drawer.', 'https://images.unsplash.com/photo-1533779283484-8ab4940aa78f?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Solace Bedside Table</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹54,000</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Floating walnut nightstand with integrated wireless fast-charging pad and drawer.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">Easy Wall Mount</span>
+                            <button onclick="addToCart('Solace Bedside Table', 54000)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="beds">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=800&auto=format&fit=crop" alt="Canopy Bed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Canopy+Bed'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">Architectural</span>
+                        <button onclick="openProductModal('Minimalist Canopy Bed', 315000, 'Sleek matte black steel frame engineered for striking architectural presence in contemporary villas.', 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Minimalist Canopy Bed</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹3,15,000</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Sleek matte black steel frame engineered for striking architectural presence.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">Modular Assembly</span>
+                            <button onclick="addToCart('Minimalist Canopy Bed', 315000)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="product-card group bg-brandSurface rounded-3xl overflow-hidden border border-brandPrimary/10 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col" data-category="living">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-brandPrimary/5">
+                        <img src="https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?q=80&w=800&auto=format&fit=crop" alt="Cashmere Throw" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600/e2e2e2/333333?text=Cashmere+Throw'">
+                        <span class="absolute top-4 left-4 bg-brandBg/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brandAccent">Accessory</span>
+                        <button onclick="openProductModal('Mongolian Cashmere Throw', 26500, 'Supremely soft ethically sourced cashmere woven in artisanal Scottish mills for cozy evenings.', 'https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?q=80&w=800&auto=format&fit=crop')" class="absolute bottom-4 right-4 w-11 h-11 bg-brandSurface rounded-full flex items-center justify-center text-brandPrimary shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-serif text-2xl font-medium group-hover:text-brandAccent transition-colors">Mongolian Cashmere Throw</h3>
+                                <span class="font-serif text-xl font-bold text-brandAccent">₹26,500</span>
+                            </div>
+                            <p class="text-sm text-brandMuted font-light">Supremely soft ethically sourced cashmere woven in artisanal Scottish mills.</p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-brandPrimary/10 flex items-center justify-between">
+                            <span class="text-xs text-brandMuted uppercase tracking-wider">Dry Clean Only</span>
+                            <button onclick="addToCart('Mongolian Cashmere Throw', 26500)" class="text-sm font-semibold text-brandPrimary hover:text-brandAccent flex items-center gap-2">
+                                Add to Bag <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-24 px-6 bg-brandSurface border-y border-brandPrimary/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">White Glove Experiences</span>
+                <h2 class="font-serif text-4xl sm:text-5xl mt-2">Bespoke Sanjay Services</h2>
+                <p class="text-brandMuted mt-4 font-light">From architectural consultation to personalized sleep analysis, we curate your sanctuary from the ground up.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-brandBg border border-brandPrimary/10 flex flex-col justify-between hover:border-brandAccent transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brandAccent/10 text-brandAccent flex items-center justify-center text-2xl mb-6 group-hover:bg-brandAccent group-hover:text-white transition-all">
+                            <i class="fa-solid fa-compass-drafting"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-medium mb-3">Interior Architecture</h3>
+                        <p class="text-brandMuted text-sm font-light leading-relaxed">Collaborate with our master designers to optimize bedroom flow, acoustic comfort, and mood lighting.</p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-brandPrimary/10">
+                        <a href="#contact" class="text-sm font-semibold hover:text-brandAccent flex items-center gap-2">Book Consultation <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-brandBg border border-brandPrimary/10 flex flex-col justify-between hover:border-brandAccent transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brandAccent/10 text-brandAccent flex items-center justify-center text-2xl mb-6 group-hover:bg-brandAccent group-hover:text-white transition-all">
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-medium mb-3">Sleep Ergonomics Lab</h3>
+                        <p class="text-brandMuted text-sm font-light leading-relaxed">Personalized mattress firmness matching and posture alignment consultation for optimal REM rejuvenation.</p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-brandPrimary/10">
+                        <a href="#contact" class="text-sm font-semibold hover:text-brandAccent flex items-center gap-2">Take Assessment <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-brandBg border border-brandPrimary/10 flex flex-col justify-between hover:border-brandAccent transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brandAccent/10 text-brandAccent flex items-center justify-center text-2xl mb-6 group-hover:bg-brandAccent group-hover:text-white transition-all">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-medium mb-3">White Glove Installation</h3>
+                        <p class="text-brandMuted text-sm font-light leading-relaxed">Complimentary delivery, precision assembly by master craftsmen, and complete sustainable packaging removal.</p>
+                    </div>
+                    <div class="pt-6 mt-6 border-t border-brandPrimary/10">
+                        <a href="#contact" class="text-sm font-semibold hover:text-brandAccent flex items-center gap-2">Learn More <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="story" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 relative">
+                <div class="rounded-3xl overflow-hidden aspect-[4/3] bg-brandPrimary/5 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop" alt="Craftsmanship" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-8 -right-8 bg-brandPrimary text-brandBg p-8 rounded-3xl max-w-xs shadow-2xl hidden sm:block">
+                    <p class="font-serif text-xl italic">"Simplicity is not the lack of clutter, it is the presence of absolute harmony."</p>
+                    <p class="text-xs uppercase tracking-widest text-brandAccent mt-4">— Sanjay Founder</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 space-y-6">
+                <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">Our Philosophy</span>
+                <h2 class="font-serif text-4xl sm:text-5xl">Designed for Deep Living, Built to Last Generations.</h2>
+                <p class="text-brandMuted font-light leading-relaxed">
+                    At Sanjay, we believe your bedroom is more than just a room—it is your personal restorative sanctuary. Every piece of timber is sustainably harvested, hand-inspected, and shaped with meticulous joinery that requires zero visible metal hardware.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div>
+                        <h4 class="font-serif text-xl font-medium text-brandPrimary">Zero VOC Finishes</h4>
+                        <p class="text-sm text-brandMuted mt-1">Natural plant-based oils that nourish wood while ensuring clean indoor air quality.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-xl font-medium text-brandPrimary">Ethical Sourcing</h4>
+                        <p class="text-sm text-brandMuted mt-1">100% FSC-certified timber partnered with replanting initiatives across global reserves.</p>
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <a href="#contact" class="inline-flex items-center gap-3 text-brandPrimary font-semibold hover:text-brandAccent transition-colors">
+                        Visit Our Flagship Atelier <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 px-6 bg-brandSurface border-t border-brandPrimary/10">
+        <div class="max-w-4xl mx-auto bg-brandBg rounded-3xl p-8 sm:p-16 border border-brandPrimary/10 shadow-xl">
+            <div class="text-center max-w-lg mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">Private Consultation</span>
+                <h2 class="font-serif text-4xl sm:text-5xl mt-2">Book an Atelier Visit</h2>
+                <p class="text-brandMuted mt-3 font-light text-sm">Experience our timber textures and custom fabrics in person at our flagship design studios.</p>
+            </div>
+            
+            <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Your Full Name</label>
+                        <input type="text" required placeholder="Aarav Sharma" class="w-full bg-brandSurface border border-brandPrimary/20 rounded-xl px-4 py-3.5 outline-none focus:border-brandAccent transition-colors text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Phone Number (+91)</label>
+                        <input type="tel" required placeholder="98765 43210" pattern="[0-9]{10}" class="w-full bg-brandSurface border border-brandPrimary/20 rounded-xl px-4 py-3.5 outline-none focus:border-brandAccent transition-colors text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Preferred City Atelier</label>
+                        <select class="w-full bg-brandSurface border border-brandPrimary/20 rounded-xl px-4 py-3.5 outline-none focus:border-brandAccent transition-colors text-sm">
+                            <option>New Delhi (Mehrauli Design District)</option>
+                            <option>Mumbai (Lower Parel Luxury Hub)</option>
+                            <option>Bengaluru (Indiranagar Flagship)</option>
+                            <option>Hyderabad (Jubilee Hills)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Consultation Type</label>
+                        <select class="w-full bg-brandSurface border border-brandPrimary/20 rounded-xl px-4 py-3.5 outline-none focus:border-brandAccent transition-colors text-sm">
+                            <option>Platform Beds & Mattresses</option>
+                            <option>Full Home Interior Styling</option>
+                            <option>General Inquiry</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Message or Specifications</label>
+                    <textarea rows="4" placeholder="Tell us about your room dimensions or custom wood finish preferences..." class="w-full bg-brandSurface border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent transition-colors h-32 resize-none text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg text-sm">
+                    Submit Appointment Request
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-brandPrimary text-brandBg py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-brandBg/10">
+            <div class="md:col-span-5 space-y-4">
+                <span class="font-serif text-3xl font-bold tracking-wider">SANJAY</span>
+                <p class="text-gray-400 text-sm max-w-sm font-light">
+                    Sanctuary of Absolute Elegance. Elevating modern beds and luxury home products through rigorous artisan craftsmanship.
+                </p>
+                <div class="flex gap-4 pt-2">
+                    <a href="#" class="w-10 h-10 rounded-full bg-brandBg/10 flex items-center justify-center hover:bg-brandAccent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-brandBg/10 flex items-center justify-center hover:bg-brandAccent transition-colors"><i class="fa-brands fa-pinterest-p"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-brandBg/10 flex items-center justify-center hover:bg-brandAccent transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2 space-y-4">
+                <h4 class="font-semibold tracking-wider text-sm uppercase text-brandAccent">Collections</h4>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li><a href="#collection" class="hover:text-brandAccent transition-colors">Platform Beds</a></li>
+                    <li><a href="#collection" class="hover:text-brandAccent transition-colors">Canopy Frames</a></li>
+                    <li><a href="#collection" class="hover:text-brandAccent transition-colors">Lounge Chairs</a></li>
+                    <li><a href="#collection" class="hover:text-brandAccent transition-colors">Bedside Tables</a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-2 space-y-4">
+                <h4 class="font-semibold tracking-wider text-sm uppercase text-brandAccent">Services</h4>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li><a href="#services" class="hover:text-brandAccent transition-colors">Interior Architecture</a></li>
+                    <li><a href="#services" class="hover:text-brandAccent transition-colors">Sleep Ergonomics</a></li>
+                    <li><a href="#services" class="hover:text-brandAccent transition-colors">White Glove Delivery</a></li>
+                    <li><a href="#services" class="hover:text-brandAccent transition-colors">Atelier Booking</a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-3 space-y-4">
+                <h4 class="font-semibold tracking-wider text-sm uppercase text-brandAccent">Sanctuary Newsletter</h4>
+                <p class="text-xs text-gray-400">Receive private collection releases and seasonal design journals.</p>
+                <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                    <input type="email" placeholder="Enter email" required class="bg-brandBg/10 border border-brandBg/20 rounded-full px-4 py-2.5 text-sm w-full outline-none focus:border-brandAccent text-white">
+                    <button type="submit" class="px-5 py-2.5 bg-brandAccent text-white rounded-full font-semibold hover:opacity-90 transition-opacity">Join</button>
+                </form>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400">
+            <p>© 2026 SANJAY Home & Living. All rights reserved.</p>
+            <div class="flex gap-6 mt-4 sm:mt-0">
+                <a href="#" class="hover:text-brandAccent">Privacy Policy</a>
+                <a href="#" class="hover:text-brandAccent">Terms of Service</a>
+                <a href="#" class="hover:text-brandAccent">Sustainability Report</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="product-modal" class="fixed inset-0 z-50 bg-brandPrimary/60 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-brandSurface w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl border border-brandPrimary/10 relative flex flex-col md:flex-row max-h-[90vh]">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-brandBg flex items-center justify-center hover:bg-brandPrimary hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="md:w-1/2 bg-brandBg p-8 flex items-center justify-center relative">
+                <img id="modal-img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=800&auto=format&fit=crop" alt="Product View" class="rounded-2xl max-h-[400px] object-cover shadow-lg">
+            </div>
+            <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-brandAccent font-semibold">Signature Series</span>
+                    <h2 id="modal-title" class="font-serif text-3xl font-medium mt-1">Sanjay Sovereign Bed</h2>
+                    <p id="modal-price" class="font-serif text-2xl font-bold text-brandAccent mt-2">₹2,35,000</p>
+                    <p id="modal-desc" class="text-sm text-brandMuted font-light mt-4 leading-relaxed">
+                        Engineered with mortise and tenon joinery. Includes adjustable headboard inclination, organic cotton canvas upholstery option, and lifetime structural guarantee.
+                    </p>
+                    <div class="mt-6 space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Select Size</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button type="button" class="py-2.5 rounded-xl border border-brandPrimary/20 text-sm font-medium hover:border-brandAccent hover:text-brandAccent transition-all focus:border-brandAccent focus:text-brandAccent">Queen (60x78")</button>
+                                <button type="button" class="py-2.5 rounded-xl border border-brandPrimary/20 text-sm font-medium hover:border-brandAccent hover:text-brandAccent transition-all focus:border-brandAccent focus:text-brandAccent">King (72x78")</button>
+                                <button type="button" class="py-2.5 rounded-xl border border-brandPrimary/20 text-sm font-medium hover:border-brandAccent hover:text-brandAccent transition-all focus:border-brandAccent focus:text-brandAccent">Custom Size</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-8 mt-8 border-t border-brandPrimary/10 flex gap-4">
+                    <button onclick="addModalToCart()" class="flex-grow py-4 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg text-center text-sm">
+                        Add to Bag
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-brandPrimary/40 backdrop-blur-sm hidden justify-end">
+        <div class="w-full max-w-md bg-brandBg h-full p-8 flex flex-col justify-between shadow-2xl relative">
+            <div>
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="font-serif text-2xl font-bold">Your Sanctuary Bag</h3>
+                    <button onclick="closeCartDrawer()" class="w-10 h-10 rounded-full hover:bg-brandPrimary/10 flex items-center justify-center">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <div id="cart-items" class="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
+                    <div class="flex items-center justify-between p-4 bg-brandSurface rounded-2xl border border-brandPrimary/10">
+                        <div>
+                            <h4 class="font-semibold text-sm">Sanjay Sovereign Bed</h4>
+                            <p class="text-xs text-brandMuted">King (72x78") / Oak</p>
+                            <p class="text-sm font-bold text-brandAccent mt-1">₹2,35,000</p>
+                        </div>
+                        <button onclick="removeItem(0)" class="text-brandMuted hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="space-y-3 py-4 border-t border-brandPrimary/10">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-brandMuted">Subtotal</span>
+                        <span class="font-semibold" id="cart-subtotal">₹2,35,000</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-brandMuted">Pan-India White Glove Delivery</span>
+                        <span class="text-brandAccent font-semibold">Complimentary</span>
+                    </div>
+                    <div class="flex justify-between text-base font-bold pt-2 border-t border-brandPrimary/10">
+                        <span>Total (Incl. GST)</span>
+                        <span id="cart-total">₹2,35,000</span>
+                    </div>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full py-4 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg text-center mt-4 text-sm">
+                    Proceed to Secure Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-brandPrimary/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-brandSurface w-full max-w-xl rounded-3xl p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckoutModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-brandBg flex items-center justify-center hover:bg-brandPrimary hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-serif text-3xl font-medium mb-2">Secure Indian Checkout</h3>
+            <p class="text-sm text-brandMuted mb-6">Enter your delivery details for white-glove doorstep delivery across India.</p>
+            
+            <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">Full Name *</label>
+                        <input type="text" id="chk-name" required placeholder="e.g. Vikram Malhotra" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">Mobile Number (+91) *</label>
+                        <input type="tel" id="chk-phone" required placeholder="98765 43210" pattern="[0-9]{10}" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">Email Address *</label>
+                    <input type="email" id="chk-email" required placeholder="vikram@example.com" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">Street Address / Apartment *</label>
+                    <textarea id="chk-address" required rows="2" placeholder="House No, Building Name, Street, Landmark" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm resize-none"></textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">City *</label>
+                        <input type="text" id="chk-city" required placeholder="New Delhi / Mumbai" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">State *</label>
+                        <input type="text" id="chk-state" required placeholder="Delhi / Maharashtra" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brandMuted mb-1">PIN Code *</label>
+                        <input type="text" id="chk-pin" required placeholder="110001" pattern="[0-9]{6}" class="w-full bg-brandBg border border-brandPrimary/20 rounded-xl px-4 py-3 outline-none focus:border-brandAccent text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-brandMuted mb-2">Payment Mode</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-brandPrimary/20 bg-brandBg cursor-pointer text-sm font-medium">
+                            <input type="radio" name="paymode" checked class="accent-brandAccent"> UPI / CC / NetBanking
+                        </label>
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-brandPrimary/20 bg-brandBg cursor-pointer text-sm font-medium">
+                            <input type="radio" name="paymode" class="accent-brandAccent"> COD (White Glove)
+                        </label>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-brandPrimary/10">
+                    <button type="submit" class="w-full py-4 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg text-center text-sm">
+                        Place Secure Order (₹ <span id="checkout-total-btn">2,35,000</span>)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="order-success-modal" class="fixed inset-0 z-50 bg-brandPrimary/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-brandSurface w-full max-w-md rounded-3xl p-8 shadow-2xl text-center relative">
+            <div class="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-serif text-3xl font-medium text-brandPrimary mb-2">Order Confirmed!</h3>
+            <p class="text-brandMuted text-sm mb-6">Thank you for choosing Sanjay. Your order ID is <span id="order-id" class="font-bold text-brandPrimary">SANJ-89421</span>. Our concierge will contact you shortly regarding delivery scheduling.</p>
+            <button onclick="closeSuccessModal()" class="w-full py-3.5 bg-brandPrimary text-brandBg rounded-full font-medium hover:bg-brandAccent transition-all shadow-lg text-sm">
+                Return to Sanctuary
+            </button>
+        </div>
+    </div>
+
+    <div id="search-modal" class="fixed inset-0 z-50 bg-brandPrimary/80 backdrop-blur-md hidden items-start justify-center pt-24 p-4">
+        <div class="bg-brandSurface w-full max-w-2xl rounded-3xl p-6 shadow-2xl relative">
+            <button onclick="closeSearchModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-brandBg flex items-center justify-center hover:bg-brandPrimary hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 border-b border-brandPrimary/10 pb-4 mb-4">
+                <i class="fa-solid fa-magnifying-glass text-brandAccent text-xl"></i>
+                <input type="text" placeholder="Search beds, nightstands, cashmere throws..." class="w-full bg-transparent text-lg outline-none font-sans">
+            </div>
+            <p class="text-xs uppercase tracking-widest text-brandMuted mb-3">Popular Searches</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-4 py-2 bg-brandBg rounded-full text-xs font-medium cursor-pointer hover:bg-brandAccent hover:text-white transition-colors">Sovereign Bed</span>
+                <span class="px-4 py-2 bg-brandBg rounded-full text-xs font-medium cursor-pointer hover:bg-brandAccent hover:text-white transition-colors">Zenith Upholstered</span>
+                <span class="px-4 py-2 bg-brandBg rounded-full text-xs font-medium cursor-pointer hover:bg-brandAccent hover:text-white transition-colors">Aura Lounge</span>
+                <span class="px-4 py-2 bg-brandBg rounded-full text-xs font-medium cursor-pointer hover:bg-brandAccent hover:text-white transition-colors">Canopy Frames</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll reveal observer
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section > div').forEach(el => {
+                el.classList.add('fade-in-up');
+                observer.observe(el);
+            });
+            updateTotals();
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Product filtering
+        function filterProducts(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brandPrimary', 'text-brandBg');
+                btn.classList.add('text-brandPrimary');
+            });
+            event.target.classList.add('bg-brandPrimary', 'text-brandBg');
+            event.target.classList.remove('text-brandPrimary');
+
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        let currentModalPrice = 235000;
+        let currentModalName = 'Sanjay Sovereign Bed';
+
+        // Product Modal
+        function openProductModal(productName, price, desc, imgUrl) {
+            currentModalName = productName;
+            currentModalPrice = price;
+            const modal = document.getElementById('product-modal');
+            document.getElementById('modal-title').innerText = productName;
+            document.getElementById('modal-price').innerText = '₹' + price.toLocaleString('en-IN');
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = imgUrl;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Cart Drawer
+        let cartItemsData = [
+            { name: 'Sanjay Sovereign Bed', price: 235000, desc: 'King (72x78") / Oak' }
+        ];
+
+        function openCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.remove('hidden');
+            drawer.classList.add('flex');
+            updateCartUI();
+        }
+
+        function closeCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.add('hidden');
+            drawer.classList.remove('flex');
+        }
+
+        function addToCart(name, price) {
+            cartItemsData.push({ name: name, price: price, desc: 'Standard Edition' });
+            updateCartUI();
+            openCartDrawer();
+        }
+
+        function addModalToCart() {
+            addToCart(currentModalName, currentModalPrice);
+            closeProductModal();
+        }
+
+        function removeItem(index) {
+            cartItemsData.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            
+            if (cartItemsData.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-sm text-brandMuted text-center py-8">Your sanctuary bag is empty.</p>';
+            } else {
+                cartItemsData.forEach((item, idx) => {
+                    const itemHTML = `
+                        <div class="flex items-center justify-between p-4 bg-brandSurface rounded-2xl border border-brandPrimary/15">
+                            <div>
+                                <h4 class="font-semibold text-sm">${item.name}</h4>
+                                <p class="text-xs text-brandMuted">${item.desc}</p>
+                                <p class="text-sm font-bold text-brandAccent mt-1">₹${item.price.toLocaleString('en-IN')}</p>
+                            </div>
+                            <button onclick="removeItem(${idx})" class="text-brandMuted hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    `;
+                    cartItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+                });
+            }
+
+            document.getElementById('cart-count').innerText = cartItemsData.length;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const subtotal = cartItemsData.reduce((sum, item) => sum + item.price, 0);
+            const formatted = '₹' + subtotal.toLocaleString('en-IN');
+            document.getElementById('cart-subtotal').innerText = formatted;
+            document.getElementById('cart-total').innerText = formatted;
+            const chkBtn = document.getElementById('checkout-total-btn');
+            if(chkBtn) chkBtn.innerText = subtotal.toLocaleString('en-IN');
+        }
+
+        function openCheckoutModal() {
+            if(cartItemsData.length === 0) {
+                return;
+            }
+            closeCartDrawer();
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+            cartItemsData = [];
+            updateCartUI();
+            
+            const randomId = 'SANJ-' + Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('order-id').innerText = randomId;
+            
+            const successModal = document.getElementById('order-success-modal');
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('order-success-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Search Modal
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('search-modal').classList.add('flex');
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.add('hidden');
+            document.getElementById('search-modal').classList.remove('flex');
+        }
+
+        // Form Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
